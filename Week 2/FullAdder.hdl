@@ -1,0 +1,17 @@
+/**
+ * Computes the sum of three bits.
+ */
+
+CHIP FullAdder {
+    IN a, b, c;  // 1-bit inputs
+    OUT sum,     // Right bit of a + b + c
+        carry;   // Left bit of a + b + c
+
+    PARTS:
+    //compare the first two inputs
+    HalfAdder(a=a, b=b, sum=absum, carry=abcarry);
+    //add the first two to the third. Sum is complete.
+    HalfAdder(a=absum, b=c, sum=sum, carry=abccarry);
+    //if either combination carried, carry will be 1
+    Or(a=abcarry, b=abccarry, out=carry);
+}
